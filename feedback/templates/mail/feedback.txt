@@ -1,0 +1,19 @@
+{% load i18n %}
+{% blocktrans %}User's message on the website {{ domain }}.{% endblocktrans %}
+
+{{ obj.date }}
+
+{% trans "Name" %}: {{ obj.name }}
+{% if obj.email %}
+	{% trans "E-mail" %}: {{ obj.email }}
+{% endif %}
+{% if obj.phone %}
+	{% trans "Phone" %}: {{ obj.phone }}
+{% endif %}
+
+{% trans "Message" %}:
+{{ obj.text|linebreaksbr }}
+
+<a href="http://{{ domain }}/admin/feedback/feedbackitem/{{ obj.id }}/">{% trans "To show the message" %}</a>
+
+{% trans "Auto send message." %}

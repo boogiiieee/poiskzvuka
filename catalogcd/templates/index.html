@@ -1,0 +1,13 @@
+{% extends "default.html" %}
+
+{% block title %}{{ flatpage.title }}{% endblock %}
+{% block keywords %}{% endblock %}
+{% block description %}{% endblock %}
+
+{% load paginate thumbnail %}
+
+{% block content %}
+	<h2 class="title">{{ flatpage.title }}<em class="border"></em></h2>
+	{{ flatpage.content|safe }}
+{% endblock %}
+

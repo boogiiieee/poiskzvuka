@@ -1,0 +1,90 @@
+{% load paginate thumbnail cd_tags %}
+	{% if cd_list %}
+			<table id="catalog_cd" class="table-striped">
+				<thead>
+					<tr>
+						<th>Артист</th>
+						<th>Альбом</th>
+						<th>Страна</th>
+						<th>Лейбл</th>
+						<th>Примечание</th>
+						<th>Цена</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for item in cd_list %}
+						<tr class="pointer bt" id="i{{ item.id }}">
+							<td class="red">{{ item.get_artist }}</td>
+							<td>{% if item.get_album %}{{ item.get_album }}{% endif %}</td>
+							<td>{% if item.get_country %}{{ item.get_country }}{% endif %}</td>
+							<td>{% if item.get_label %}{{ item.get_label }}{% endif %}</td>
+							<td>{% if item.get_text %}{{ item.get_text|striptags|safe|truncatewords:'5' }}{% endif %}</td>
+							<td class="red" width="100px">{% if item.get_cost %}{{ item.get_cost }} руб.{% endif %}</td>
+						</tr>
+						<tr {% if not request.GET.id|equal_in_get:item.id %} style="display:none;" {% endif %}>
+							<td colspan="6">
+								<h2 class="title">{{ item.get_title }}<em class="border"></em></h2>
+								{% if item.get_image %}
+									<div class="grid_2 alpha">
+										{% thumbnail item.get_image "x600" format="PNG" upscale="False" as imb %}
+											<a href="{{ imb.url }}" class="lightbox" title="{{ item.get_title }}">
+												{% thumbnail item.get_image "421" crop="center" format="PNG" as im %}
+													<img src="{{ im.url }}" alt="{{ item.get_title }}" />
+												{% endthumbnail %}
+											</a>
+										{% endthumbnail %}
+										<br>
+									</div>
+								{% endif %}
+								<div class="grid_4" style="width:65.66666667%;">
+									<blockquote>
+										<label>Артист:</label>
+										<p>{{ item.get_artist }}</p>
+										{% if item.get_album %}
+											<label>Альбом:</label>
+											<p>{{ item.get_album }}</p>
+										{% endif%}
+										{% if item.get_country %}
+											<label>Страна:</label>
+											<p>{{ item.get_country }}</p>
+										{% endif%}
+										{% if item.get_label %}
+											<label>Лейбл:</label>
+											<p>{{ item.get_label }}</p>
+										{% endif%}
+										{% if item.get_text %}
+											<label>Примечание:</label>
+											<div>{{ item.get_text|safe }}</div>
+										{% endif%}
+										{% if item.get_cost %}
+											<label class="red">Цена:</label>
+											<h6 class="red">{{ item.get_cost }} руб.</h6>
+										{% endif%}
+									</blockquote>
+									<br>
+								</div>
+								<div class="clear"></div>
+								<br>
+								<div class="sep"></div>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		<div class="clear"></div>
+		{% include "paginate.html" %}
+	{% else %}
+		<h3>Список пуст.</h3>
+	{% endif %}
+<script>
+	$('.bt').click(function(){
+		$(this).each(function(indx){
+			if ($(this).next("tr").is(':visible')) {
+				$(this).next("tr").slideUp();
+			}else{
+				$(this).next("tr").slideDown();
+			}
+		});
+		return false;
+	});
+</script>

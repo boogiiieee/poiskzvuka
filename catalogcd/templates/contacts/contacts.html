@@ -1,0 +1,38 @@
+{% extends "default.html" %}
+
+{% load paginate thumbnail mptt_tags %}
+
+{% block title %}{{ request.flatpage.title }}{% endblock %}
+{% block keywords %}{% endblock %}
+{% block description %}{% endblock %}
+
+{% block content %}
+	{% include "catalog/left_menu.html" %}
+	<div class="grid_4 alpha">
+		<h2 class="title">{{ request.flatpage.title }}<em class="border"></em></h2>
+		{{ request.flatpage.content|safe }}
+		<div id="comments" class="grid_6">
+			{% include "message.html" %}
+			<form name="cont_f" action="" class="container_6" method="post">{% csrf_token %}
+				<div class="grid_2 alpha {% if form.name.errors %} error {% endif %}">
+					<label for="id_name">Имя:<span class="red f_right">{{ form.name.errors }}</span></label>
+					{{ form.name }}
+				</div>
+				<div class="grid_2 {% if form.email.errors %} error {% endif %}">
+					<label for="id_email">Email:<span class="red f_right">{{ form.email.errors }}</span></label>
+					{{ form.email }}
+				</div>
+				<div class="grid_2 {% if form.phone.errors %} error {% endif %}">
+					<label for="id_phone">Телефон:<span class="red f_right">{{ form.phone.errors }}</span></label>
+					{{ form.phone }}
+				</div>
+				<div class="{% if form.text.errors %} error {% endif %}">
+					<label for="id_text">Сообщение:<span class="red f_right">{{ form.errors.text }}</span></label>
+					{{ form.text }}
+				</div>
+				<input id="but_form" type="submit" value="Отправить" class="button f_left"></div>
+			</form>
+		</div>
+	</div>
+{% endblock %}
+

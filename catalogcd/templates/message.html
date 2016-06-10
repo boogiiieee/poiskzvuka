@@ -1,0 +1,10 @@
+{% if messages %}
+	<div id="contact_alert" class="margin_b">
+		<ul>
+			{% for message in messages %}
+				<li><strong>{{ message }}</strong></li>
+			{% endfor %}
+		</ul>
+	</div>
+{% endif %}
+

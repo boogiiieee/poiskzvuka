@@ -1,0 +1,30 @@
+{% load paginate thumbnail mptt_tags cd_tags %}
+<div id="sidebar" class="grid_2 category_cd mar_r_3_l_0">
+	{% for category in category_list %}
+		<div id="recent-concerts" class="module">
+			<h3>{{ category.get_title }}</h3>
+			{% if not category.is_leaf_node %}
+				<ul class="inner clearfix">
+					{% recursetree category.get_descendants %} 
+						<li>
+							<a href="/catalog?cat={{ node.id }}" {% ifequal cat node.id %}class="active"{% endifequal %}>
+								{% if node.image %}
+									{% thumbnail node.get_image "60x60" crop="center" format="PNG" as im %}
+										<img src="{{ im.url }}" alt="{{ item.get_title }}" />
+									{% endthumbnail %}
+								{% endif %}
+								<span>{{ node.title }}</span>
+							</a>
+							{% if not node.is_leaf_node %}
+								<ul>
+									{{ children }}
+								</ul>
+							{% endif %}
+						</li>
+					{% endrecursetree %} 
+				</ul>
+				<div class="hide_border"></div>
+			{% endif %}
+		</div>
+	{% endfor %}
+</div>

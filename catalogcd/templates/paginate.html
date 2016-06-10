@@ -1,0 +1,16 @@
+{% load paginate %}
+<div class="paginate margin_b">
+	{% if is_paginated %} 
+		{% paginate_split_list page_range page %}
+			{% for interval,more in paginate_page_range.0 %}
+				{% for p in interval %}
+					{% ifequal p page %}
+						<span>{{ p }}</span>
+					{% else %}
+						<a href="{% get_url 'page' p %}" title="Страница {{ p }}" onclick="return load_catalog('{{ q }}','{{ p }}')">{{ p }}</a>
+					{% endifequal %}
+				{% endfor %}
+				{% if more %}&nbsp; ... &nbsp;{% endif %}
+			{% endfor %}
+	{% endif %}
+</div>

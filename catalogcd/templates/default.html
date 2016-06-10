@@ -1,0 +1,115 @@
+<!doctype html>
+<!--[if lte IE 7 ]><html class="ie7 oldie" dir="ltr" lang="ru"><![endif]-->
+<!--[if IE 8 ]>    <html class="ie8 oldie" dir="ltr" lang="ru"><![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html dir="ltr" lang="ru"><!--<![endif]-->
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>{% block title %}{{ config.name1 }}{{ config.name2 }}{% endblock %}</title>
+	<meta name="keywords" content="{% block keywords %}{% endblock %}" />
+	<meta name="description" content="{% block description %}{% endblock %}" />
+
+	<link rel="shortcut icon" href="{{ MEDIA_URL }}img/favicon.ico" type="image/x-icon" />
+
+	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/style.css">
+
+	<!--[if IE]>
+		<script type="text/javascript" src="{{ MEDIA_URL }}js/ie.js"></script>
+		<script type="text/javascript" src="{{ MEDIA_URL }}js/respond.min.js"></script>
+	<![endif]-->
+	<script type='text/javascript' src='{{ MEDIA_URL }}js/jquery.min.js'></script>
+
+</head>
+
+	<body id="catalog" class="no-js">
+		{% load thumbnail %}
+		<header id="header" class="normal-size">
+			<hgroup id="logo">
+				<h1><a name="catalog" href="/"><img src="{{ MEDIA_URL }}img/logo.png" alt="{{ config.name1 }}{{ config.name2 }}" /><span>{{ config.name1 }}</span><span class="grey">{{ config.name2 }}</span></a></h1>
+			</hgroup>
+			<nav>
+				<div class="border-top"></div>
+				<ul id="tmenu">
+					<li {% ifequal request.flatpage.url '/' %}class="current_page_item"{% endifequal %}><a href="/">Главная</a></li>
+					<li {% ifequal request.flatpage.url '/catalog/' %}class="current_page_item"{% endifequal %}><a href="/catalog">Каталог</a></li>
+					<li {% ifequal request.flatpage.url '/delivery_and_payment/' %}class="current_page_item"{% endifequal %}><a href="/delivery_and_payment">Оплата и доставка</a></li>
+					<li {% ifequal request.flatpage.url '/contacts/' %}class="current_page_item"{% endifequal %}><a href="/contacts">Контакты</a></li>
+				</ul>
+				<div class="border-bottom"></div>
+			</nav>
+		</header>
+		<div class="sep-header normal-size"></div>
+		<section id="main">
+			<div class="wrapper inner-page extra-padding clearfix">
+				<div class="container_6">
+					{% block content %}
+					{% endblock %}
+				</div>
+			</div>
+			<div class="border-bottom"></div>
+			<a href="#logo" id="top-link"><span class="fontawesome">▲</span></a>
+		</section>
+		<footer id="footer">
+			<div class="wrapper clearfix">
+				<div class="copyright module">
+					<a href="/">
+						<h3 class="logo">
+							<img src="{{ MEDIA_URL }}img/logo-gray.png" height="50" alt="{{ config.name1 }}{{ config.name2 }}" />
+							{{ config.name1 }}{{ config.name2 }}
+						</h3>
+					</a>
+					
+					<div id="text_footer">
+						<p>{{ config.footer }}</p>
+					</div>
+					<p>&copy; 2012 {{ config.name1 }}{{ config.name2 }}.</p>
+				</div>
+				<div class="pages module">
+					<h3>Меню</h3>
+					<ul>
+						<li><a href="/">Главная</a></li>
+					</ul>
+					<ul>
+						<li><a href="/catalog">Каталог</a></li>
+					</ul>
+					<ul>
+						<li><a href="/delivery_and_payment">Оплата и доставка</a></li>
+					</ul>
+					<ul>
+						<li><a href="/contacts">Контакты</a></li>
+					</ul>
+				</div>
+				<div class="updates module">
+					<h3>Контакты</h3>
+					{% if config.address %}
+						<ul class="icons">
+							<li>{{ config.address }}</li>
+						</ul>
+					{% endif %}
+					{% if config.phone %}
+						<ul class="icons">
+							<li>тел. {{ config.phone }}</li>
+						</ul>
+					{% endif %}
+					{% if config.email %}
+						<ul class="icons">
+							<li><a href="mailto:{{ config.email }}">e-mail: {{ config.email }}</a></li>
+						</ul>
+					{% endif %}
+				</div>
+				<div class="photos module">
+					<h3>Популярное</h3>
+					{% for foto in foto_list %}
+						<a href="/catalog/{{ foto.get_absolute_url }}#i{{ foto.id }}" title="{{ foto.get_title }}">
+							{% thumbnail foto.get_image "80x80" crop="center" format="PNG" as im %}
+								<img src="{{ im.url }}" alt="{{ foto.get_title }}" />
+							{% endthumbnail %}
+						</a>
+					{% endfor%}
+				</div>
+			</div>
+		</footer>
+			<script type='text/javascript' src='{{ MEDIA_URL }}js/jquery.plugins.min.js'></script>
+			<script type='text/javascript' src='{{ MEDIA_URL }}js/site.js'></script>
+				
+	</body>
+</html>

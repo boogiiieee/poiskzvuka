@@ -1,0 +1,13 @@
+{% extends "default.html" %}
+
+{% block title %}{{ flatpage.title }}{% endblock %}
+{% block keywords %}{% endblock %}
+{% block description %}{% endblock %}
+
+{% block content %}
+	{% include "catalog/left_menu.html" %}
+	<div class="grid_4 alpha">
+		<h2 class="title">{{ flatpage.title }}<em class="border"></em></h2>
+		{{ flatpage.content|safe }}
+	</div>
+{% endblock %}

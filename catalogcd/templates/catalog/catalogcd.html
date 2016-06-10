@@ -1,0 +1,46 @@
+{% extends "default.html" %}
+
+{% load paginate thumbnail mptt_tags cd_tags %}
+
+{% block title %}{{ request.flatpage.title }}{% endblock %}
+{% block keywords %}{% endblock %}
+{% block description %}{% endblock %}
+
+{% block content %}
+
+	{% block left_menu %}
+		{% include "catalog/left_menu.html" %}
+	{% endblock %}
+	
+	<div class="grid_4 alpha">
+		<h2 class="title">
+			{% with category.get_breadcrumbs as breadcrumbs %}
+				{% if breadcrumbs %}
+					{% for bc in breadcrumbs %}
+						{% if forloop.first %}
+							<span>{{ bc.title|safe }}</span>
+						{% else %}
+							{% if forloop.last %}
+								<span>- {{ bc.title|safe }}</span>
+							{% else %}
+								<span>- <a href="?cat={{ bc.id }}">{{ bc.title|safe }}</a></span>
+							{% endif %}
+						{% endif %}
+					{% endfor %}
+				{% endif %}
+			{% endwith %}
+			<em class="border"></em>
+		</h2>
+		{{ request.flatpage.content|safe }}
+		<div id="filter">
+			{% for key,value in filt %}  
+				<a {% ifequal q key %}class="current_page_item"{% endifequal %} href="{% get_url 'q' key %}" onclick="return nav_catalog('#catalog','{{ key }}','1')">
+					<span>{{ key }}</span>
+					<span class="grey bold">({{ value }})</span>
+				</a>
+			{% endfor %}
+		</div>
+		{% include "catalog/catalogcd_table.html" %}
+	</div>
+{% endblock %}
+

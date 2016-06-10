@@ -1,0 +1,9 @@
+<a href="#" name="delivery"></a>
+<div id="delivery">
+	<h2 class="title">{{ delivery_flat_page.get_name }}<em class="border"></em></h2>
+	{% if delivery_flat_page.get_descr %}
+		<div>
+			{{ delivery_flat_page.get_descr|safe }}
+		</div>
+	{% endif %}
+</div>
